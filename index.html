@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TifiWEB — Портфолио</title>
+<meta name="description" content="TifiWEB — сайт-портфолио. Здесь работы Tifi: веб-дизайн, интерфейсы, разработка.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@360;400;480;530&display=swap" rel="stylesheet">
+<style>
+/* ===== MERCURY TOKENS ===== */
+:root{
+  --onyx:#171721;
+  --graphite:#1e1e2a;
+  --obsidian:#272735;
+  --slate-border:#70707d;
+  --mist-border:#e2e3ed;
+  --ash:#c3c3cc;
+  --ivory:#ededf3;
+  --cobalt:#5266eb;
+  --white:#ffffff;
+
+  --surface:rgba(255,255,255,.04);
+  --surface-2:rgba(255,255,255,.03);
+  --border:rgba(226,227,237,.10);
+  --border-strong:rgba(226,227,237,.18);
+
+  --text-caption:12px;
+  --text-body-sm:14px;
+  --text-body:16px;
+  --text-body-lg:18px;
+  --text-subheading:21px;
+  --text-heading-sm:28px;
+  --text-heading:32px;
+  --text-heading-lg:42px;
+  --text-display:65px;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px;
+  --s7:32px; --s8:40px; --s9:56px; --s10:72px; --s11:112px;
+
+  --r-default:4px;
+  --r-card:12px;
+  --r-pill:32px;
+  --r-nav:40px;
+
+  --maxw:1200px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-weight:400;
+  font-size:var(--text-body);
+  background:var(--onyx);
+  color:var(--ivory);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;min-height:100svh;
+}
+
+/* dotted bg — Mercury neutral */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background-image:radial-gradient(currentColor 1px,transparent 1.2px);
+  background-size:24px 24px;color:var(--ivory);opacity:.035;z-index:0;
+}
+body::after{
+  content:"";position:fixed;top:-25%;left:50%;transform:translateX(-50%);
+  width:60vw;height:45vh;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(82,102,235,.07),transparent 60%);
+  z-index:0;filter:blur(60px);
+}
+.tornado-bg{position:fixed;inset:-20%;z-index:0;pointer-events:none;opacity:.28;animation:tornado-spin 90s linear infinite;will-change:transform}
+.tornado-bg svg{width:100%;height:100%;display:block;animation:tornado-pulse 10s ease-in-out infinite}
+@keyframes tornado-spin{from{transform:rotate(0deg) scale(1.05)}to{transform:rotate(360deg) scale(1.05)}}
+@keyframes tornado-pulse{0%,100%{opacity:.28;transform:scale(1)}50%{opacity:.5;transform:scale(1.04)}}
+@media(prefers-reduced-motion:reduce){.tornado-bg,.tornado-bg svg{animation:none}}
+
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+:focus-visible{outline:2px solid var(--ivory);outline-offset:3px;border-radius:6px}
+
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 var(--s6)}
+.section{padding:var(--s10) 0}
+
+.eyebrow{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:var(--text-caption);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ash);
+}
+
+h1,h2,h3{line-height:1.15;letter-spacing:.015em;font-weight:480}
+h1{font-size:clamp(2.5rem,7vw,var(--text-display));font-weight:530;line-height:1.1;letter-spacing:.02em}
+h2{font-size:clamp(1.75rem,4vw,var(--text-heading-lg));margin-bottom:var(--s4)}
+h3{font-size:var(--text-heading-sm);margin-bottom:var(--s3)}
+p{color:var(--ivory);opacity:.85;font-size:var(--text-body);line-height:1.5}
+p.ash{color:var(--ash);opacity:1}
+
+/* ===== NAV ===== */
+.nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:rgba(23,23,33,.72);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:530;letter-spacing:.01em;font-size:var(--text-body)}
+.logo-mark{
+  width:32px;height:32px;border-radius:var(--r-nav);
+  background:var(--ivory);
+  display:grid;place-items:center;color:var(--onyx);font-size:14px;font-weight:530;
+}
+.nav-links{display:flex;gap:var(--s2);font-size:var(--text-body)}
+.nav-links a{
+  padding:10px 20px;border-radius:var(--r-nav);color:var(--ivory);opacity:.85;
+  transition:opacity .2s,background .2s;
+}
+.nav-links a:hover{opacity:1;background:var(--obsidian)}
+.nav-toggle{display:none;padding:8px 16px;border-radius:var(--r-nav);border:1px solid var(--mist-border);color:var(--ivory);font-size:var(--text-body-sm)}
+.nav-toggle:hover{background:var(--obsidian)}
+@media(max-width:720px){
+  .nav-links{
+    display:none;position:absolute;top:64px;left:0;right:0;
+    flex-direction:column;gap:0;padding:var(--s3);
+    background:rgba(23,23,33,.96);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:14px 20px;border-radius:var(--r-nav)}
+  .nav-toggle{display:inline-flex}
+}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 24px;border-radius:var(--r-pill);
+  font-weight:400;font-size:var(--text-body);
+  transition:transform .25s var(--ease),background .2s,border-color .2s,opacity .2s;
+}
+.btn-primary{background:var(--cobalt);color:var(--white);box-shadow:none}
+.btn-primary:hover{transform:translateY(-1px);background:#4555d8}
+.btn-ghost{background:transparent;border:1px solid var(--ivory);color:var(--ivory);border-radius:var(--r-nav);box-shadow:none}
+.btn-ghost:hover{background:rgba(237,237,243,.06)}
+
+/* ===== WELCOME PAGE (new first screen) ===== */
+.welcome{
+  min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;position:relative;
+  padding:var(--s10) var(--s6);
+}
+.welcome .eyebrow{margin-bottom:var(--s5)}
+.welcome h1{max-width:1000px;margin:0 auto var(--s6)}
+.welcome .title-sub{
+  display:block;font-size:clamp(1.25rem,3vw,var(--text-subheading));
+  font-weight:400;color:var(--ivory);opacity:.7;
+  margin-top:var(--s4);letter-spacing:.01em;line-height:1.4;
+}
+.welcome p{
+  max-width:640px;margin:0 auto var(--s7);
+  font-size:var(--text-body-lg);font-weight:400;color:var(--ivory);opacity:.85;
+}
+.welcome-cta{display:flex;gap:var(--s3);justify-content:center;flex-wrap:wrap}
+
+/* glass panel card inside welcome — flat Mercury */
+.welcome-card{
+  width:100%;max-width:880px;margin:var(--s9) auto 0;
+  background:var(--graphite);
+  border-radius:var(--r-card);
+  padding:var(--s7);
+  border:none;box-shadow:none;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s6);
+  text-align:left;
+}
+@media(max-width:760px){
+  .welcome-card{grid-template-columns:1fr;gap:var(--s4);padding:var(--s6)}
+}
+.welcome-card .item h3{
+  font-size:var(--text-body-lg);font-weight:480;color:var(--ivory);
+  margin-bottom:var(--s2);margin-top:0;
+}
+.welcome-card .item p{
+  font-size:var(--text-body-sm);color:var(--ash);opacity:1;margin:0;
+}
+.welcome-card .item .num{
+  font-family:ui-monospace,monospace;font-size:var(--text-caption);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ash);
+  margin-bottom:var(--s3);
+}
+
+/* small "scroll hint" arrow */
+.scroll-hint{
+  margin-top:var(--s9);color:var(--ash);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-size:var(--text-caption);letter-spacing:.1em;text-transform:uppercase;
+  font-family:ui-monospace,monospace;
+}
+.scroll-hint svg{width:14px;height:14px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ===== HERO (original, now under "projects intro") ===== */
+.hero{padding:clamp(72px,12vw,128px) 0 var(--s10);text-align:center;position:relative}
+.hero .eyebrow{margin-bottom:var(--s5)}
+.hero h1{margin-bottom:var(--s6)}
+.hero h1 .accent{color:var(--ivory)}
+.hero p{max-width:640px;margin:0 auto var(--s7);font-size:var(--text-body-lg);font-weight:400;color:var(--ivory)}
+.hero-cta{display:flex;gap:var(--s3);justify-content:center;flex-wrap:wrap}
+.hero-badges{
+  display:flex;gap:var(--s9);justify-content:center;flex-wrap:wrap;
+  margin-top:var(--s9);font-size:var(--text-body-sm);color:var(--ash);
+}
+.hero-badges span{display:inline-flex;align-items:center;gap:8px}
+.hero-badges svg{width:14px;height:14px;color:var(--ash)}
+
+/* ===== PROJECTS ===== */
+.folders{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:var(--s6);align-items:start;margin-top:var(--s8);
+}
+@media(max-width:1100px){.folders{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.folders{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.folders{grid-template-columns:1fr;gap:var(--s4)}}
+
+.folder{
+  position:relative;perspective:1000px;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
+.folder.in{opacity:1;transform:translateY(0)}
+.folder-btn{
+  position:relative;display:block;width:100%;text-align:left;
+  border-radius:var(--r-card);
+  transition:transform .3s var(--ease);
+  transform-style:preserve-3d;will-change:transform;
+}
+.folder-glass{
+  position:relative;border-radius:var(--r-card);
+  padding:var(--s7);min-height:200px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--graphite);border:none;
+  backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;
+  transition:background .25s var(--ease);
+  overflow:hidden;
+}
+.folder-glass::after{display:none}
+.folder-btn:hover .folder-glass,
+.folder-btn:focus-visible .folder-glass{background:var(--obsidian)}
+.folder-top{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.folder-tab{width:54px;height:14px;border-radius:6px 6px 0 0;background:rgba(226,227,237,.16);margin-bottom:8px}
+.folder-icon{width:22px;height:22px;color:var(--ivory)}
+.folder-count{font-size:11px;font-family:ui-monospace,monospace;letter-spacing:.1em;color:var(--ash);text-transform:uppercase}
+.folder-title{font-size:var(--text-body-lg);font-weight:480;margin-top:auto;position:relative;z-index:2;color:var(--ivory)}
+.folder-meta{font-size:var(--text-body-sm);color:var(--ash);margin-top:4px;position:relative;z-index:2}
+
+.folder.is-placeholder .folder-glass{opacity:.7}
+.folder.is-placeholder .folder-icon{color:var(--ash)}
+
+.folder-links{
+  display:grid;gap:10px;max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .55s var(--ease),opacity .4s var(--ease),margin .4s var(--ease);
+  margin-top:0;
+}
+.folder.open .folder-links{max-height:500px;opacity:1;margin-top:var(--s3)}
+.folder.open .folder-btn{transform:none!important}
+
+.site-link{
+  display:flex;align-items:center;gap:12px;padding:12px;
+  border-radius:var(--r-card);
+  background:var(--obsidian);
+  border:1px solid var(--border);
+  transform:translateY(-10px);opacity:0;
+  transition:transform .45s var(--ease-spring),opacity .4s var(--ease),background .2s,border-color .2s;
+}
+.folder.open .site-link{transform:translateY(0);opacity:1}
+.folder.open .site-link:nth-child(1){transition-delay:.06s}
+.folder.open .site-link:nth-child(2){transition-delay:.13s}
+.folder.open .site-link:nth-child(3){transition-delay:.2s}
+.site-link:hover{background:#2e2e3d;border-color:var(--border-strong)}
+.site-link-logo{width:40px;height:40px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;background:rgba(226,227,237,.05);border:1px solid var(--border)}
+.site-link-logo svg{width:24px;height:24px}
+.site-link-info{display:flex;flex-direction:column;min-width:0;flex:1}
+.site-link-name{font-size:var(--text-body-sm);font-weight:480;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ivory)}
+.site-link-url{font-size:11px;color:var(--ash);font-family:ui-monospace,monospace}
+.site-link-arrow{width:16px;height:16px;color:var(--ash);flex-shrink:0;transition:transform .2s,color .2s}
+.site-link:hover .site-link-arrow{transform:translate(2px,-2px);color:var(--ivory)}
+
+.site-link.placeholder{opacity:.55;cursor:default;border-style:dashed}
+.site-link.placeholder:hover{background:var(--obsidian);border-color:var(--border)}
+.site-link.placeholder .site-link-name{color:var(--ash)}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s10);align-items:start}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:var(--s8)}}
+.about p{font-size:var(--text-body);margin-bottom:var(--s4);color:var(--ivory)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s6)}
+.chip{
+  padding:8px 20px;border-radius:var(--r-nav);
+  font-size:var(--text-body-sm);font-weight:480;
+  background:var(--obsidian);border:1px solid var(--border);color:var(--ivory);
+  transition:transform .2s var(--ease),border-color .2s;
+}
+.chip:hover{transform:translateY(-2px);border-color:var(--border-strong)}
+.about-card{padding:var(--s7);border-radius:var(--r-card);background:var(--graphite);border:none}
+.about-card h3{font-size:var(--text-subheading);margin-bottom:var(--s4);color:var(--ivory)}
+.stat{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.stat:last-child{border-bottom:none}
+.stat span:first-child{color:var(--ash);font-size:var(--text-body-sm)}
+.stat span:last-child{font-weight:480;font-family:ui-monospace,monospace;color:var(--ivory);font-size:var(--text-body-sm)}
+
+/* ===== FOOTER ===== */
+.footer{
+  border-top:1px solid var(--border);
+  padding:var(--s9) 0 var(--s6);
+  margin-top:var(--s10);
+  position:relative;z-index:1;
+}
+.footer-top{display:flex;justify-content:space-between;align-items:start;gap:var(--s8);flex-wrap:wrap}
+.footer h2{font-size:var(--text-heading-sm);margin-bottom:var(--s4)}
+.footer-contacts{display:flex;flex-direction:column;gap:12px}
+.footer-contacts a{
+  display:inline-flex;align-items:center;gap:10px;font-size:var(--text-body-sm);
+  color:var(--ivory);opacity:.85;transition:opacity .2s,color .2s;
+}
+.footer-contacts a:hover{opacity:1;color:var(--ivory)}
+.footer-contacts svg{width:18px;height:18px;flex-shrink:0}
+.footer-bottom{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s4);
+  margin-top:var(--s8);padding-top:var(--s5);
+  border-top:1px solid var(--border);
+  font-size:var(--text-caption);color:var(--ash);
+  font-family:ui-monospace,monospace;
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}
+  html{scroll-behavior:auto}
+  .folder{opacity:1;transform:none}
+  .folder-links{transition:none}
+  .site-link{transform:none;opacity:1}
+  .scroll-hint svg{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Mercury tornado -->
+<div class="tornado-bg" aria-hidden="true">
+  <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="vortexFade" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#5266eb" stop-opacity="0"/>
+        <stop offset="55%" stop-color="#5266eb" stop-opacity=".09"/>
+        <stop offset="100%" stop-color="#5266eb" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="spiralStroke" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#5266eb" stop-opacity=".28"/>
+        <stop offset="50%" stop-color="#ededf3" stop-opacity=".05"/>
+        <stop offset="100%" stop-color="#5266eb" stop-opacity=".28"/>
+      </linearGradient>
+    </defs>
+    <g stroke="url(#spiralStroke)" fill="none" stroke-width="1.2">
+      <path d="M400 400 C 480 360, 560 420, 540 500 C 520 580, 420 620, 340 580 C 260 540, 240 440, 300 380 C 360 320, 480 320, 540 400"/>
+      <path d="M400 400 C 320 440, 240 380, 260 300 C 280 220, 380 180, 460 220 C 540 260, 560 360, 500 420 C 440 480, 320 480, 260 400"/>
+      <path d="M400 400 C 460 320, 560 340, 600 420 C 640 500, 580 600, 480 620 C 380 640, 280 560, 280 460 C 280 360, 380 280, 480 280"/>
+      <path d="M400 400 C 340 480, 240 460, 200 380 C 160 300, 220 200, 320 180 C 420 160, 520 240, 520 340 C 520 440, 420 520, 320 520"/>
+    </g>
+    <circle cx="400" cy="400" r="380" fill="url(#vortexFade)"/>
+  </svg>
+</div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top" aria-label="TifiWEB — на главную">
+      <span class="logo-mark" aria-hidden="true">T</span>
+      <span>TifiWEB</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" id="nav-toggle">Меню</button>
+    <nav class="nav-links" id="nav-menu" aria-label="Навигация">
+      <a href="#projects">Проекты</a>
+      <a href="#about">Обо мне</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== NEW WELCOME / FIRST PAGE ===== -->
+  <section class="welcome" aria-labelledby="welcome-title">
+    <div class="eyebrow">Tifi · Portfolio</div>
+    <h1 id="welcome-title">
+      Сайт-портфолио Tifi<br>
+      <span class="title-sub">Здесь собраны работы Tifi — веб-дизайн, интерфейсы, разработка.</span>
+    </h1>
+    <p>Одностраничный сайт-визитка с проектами, кейсами и контактами. Всё, что делает Tifi, — в одном месте.</p>
+    <div class="welcome-cta">
+      <a class="btn btn-primary" href="#projects">
+        Смотреть работы
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#contact">Связаться</a>
+    </div>
+
+    <div class="welcome-card" aria-label="Что здесь есть">
+      <div class="item">
+        <div class="num">01</div>
+        <h3>Работы</h3>
+        <p>Проекты Tifi — живые сайты и интерфейсы.</p>
+      </div>
+      <div class="item">
+        <div class="num">02</div>
+        <h3>О Tifi</h3>
+        <p>Дизайнер и разработчик. Один человек — полный цикл.</p>
+      </div>
+      <div class="item">
+        <div class="num">03</div>
+        <h3>Контакты</h3>
+        <p>Email, GitHub, Telegram — открыт к проектам.</p>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Листай вниз</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- ===== ORIGINAL HERO (intro to projects) ===== -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="eyebrow">Портфолио · 2026</div>
+    <h1 id="hero-title">TifiWEB<br><span class="accent">Дизайнер и разработчик</span></h1>
+    <p>Создаю интерфейсы и сайты, которые хочется трогать. Веб-дизайн, фронтенд, анимации — от идеи до продакшена.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">Смотреть работы
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#contact">Связаться</a>
+    </div>
+    <div class="hero-badges">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Чистый код</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Адаптив</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Анимации</span>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section class="section wrap" id="projects" aria-labelledby="projects-title">
+    <div class="eyebrow">Избранные проекты</div>
+    <h2 id="projects-title">Мои работы</h2>
+    <p class="ash">Наведи — папка наклонится. Нажми — откроются ссылки на сайты.</p>
+
+    <div class="folders">
+      <div class="folder" data-folder>
+        <button class="folder-btn" aria-expanded="false" aria-controls="links-1">
+          <div class="folder-glass">
+            <div class="folder-top">
+              <div>
+                <div class="folder-tab" aria-hidden="true"></div>
+                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              </div>
+              <span class="folder-count">1 сайт</span>
+            </div>
+            <div>
+              <div class="folder-title">Tradely</div>
+              <div class="folder-meta">Дневник трейдера</div>
+            </div>
+          </div>
+        </button>
+        <div class="folder-links" id="links-1" inert>
+          <a class="site-link" href="https://tifilew.github.io/Tradely.com/" target="_blank" rel="noopener noreferrer">
+            <div class="site-link-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ededf3" stroke-width="1.8" stroke-linecap="round">
+                <path d="M3 20h18" stroke="#c3c3cc" stroke-width="1.5"/>
+                <rect x="5" y="12" width="2.5" height="6" rx=".5" fill="#ededf3" fill-opacity=".35"/>
+                <path d="M6.25 9v3M6.25 18v2"/>
+                <rect x="10.5" y="8" width="2.5" height="9" rx=".5" fill="#ededf3" fill-opacity=".35"/>
+                <path d="M11.75 5v3M11.75 17v2"/>
+                <rect x="16" y="4" width="2.5" height="11" rx=".5" fill="#ededf3" fill-opacity=".55"/>
+                <path d="M17.25 2v2M17.25 15v3"/>
+              </svg>
+            </div>
+            <div class="site-link-info">
+              <span class="site-link-name">Tradely</span>
+              <span class="site-link-url">tifilew.github.io/Tradely.com</span>
+            </div>
+            <svg class="site-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="folder is-placeholder" data-folder>
+        <button class="folder-btn" aria-expanded="false" aria-controls="links-2">
+          <div class="folder-glass">
+            <div class="folder-top">
+              <div>
+                <div class="folder-tab" aria-hidden="true"></div>
+                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              </div>
+              <span class="folder-count">Скоро</span>
+            </div>
+            <div>
+              <div class="folder-title">Проект 2</div>
+              <div class="folder-meta">Скоро здесь будет проект</div>
+            </div>
+          </div>
+        </button>
+        <div class="folder-links" id="links-2" inert>
+          <div class="site-link placeholder">
+            <div class="site-link-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#c3c3cc" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><path d="M12 8v4l2 2"/></svg>
+            </div>
+            <div class="site-link-info">
+              <span class="site-link-name">Скоро здесь будет проект</span>
+              <span class="site-link-url">в разработке</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder is-placeholder" data-folder>
+        <button class="folder-btn" aria-expanded="false" aria-controls="links-3">
+          <div class="folder-glass">
+            <div class="folder-top">
+              <div>
+                <div class="folder-tab" aria-hidden="true"></div>
+                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              </div>
+              <span class="folder-count">Скоро</span>
+            </div>
+            <div>
+              <div class="folder-title">Проект 3</div>
+              <div class="folder-meta">Скоро здесь будет проект</div>
+            </div>
+          </div>
+        </button>
+        <div class="folder-links" id="links-3" inert>
+          <div class="site-link placeholder">
+            <div class="site-link-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#c3c3cc" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><path d="M12 8v4l2 2"/></svg>
+            </div>
+            <div class="site-link-info">
+              <span class="site-link-name">Скоро здесь будет проект</span>
+              <span class="site-link-url">в разработке</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder is-placeholder" data-folder>
+        <button class="folder-btn" aria-expanded="false" aria-controls="links-4">
+          <div class="folder-glass">
+            <div class="folder-top">
+              <div>
+                <div class="folder-tab" aria-hidden="true"></div>
+                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              </div>
+              <span class="folder-count">Скоро</span>
+            </div>
+            <div>
+              <div class="folder-title">Проект 4</div>
+              <div class="folder-meta">Скоро здесь будет проект</div>
+            </div>
+          </div>
+        </button>
+        <div class="folder-links" id="links-4" inert>
+          <div class="site-link placeholder">
+            <div class="site-link-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#c3c3cc" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><path d="M12 8v4l2 2"/></svg>
+            </div>
+            <div class="site-link-info">
+              <span class="site-link-name">Скоро здесь будет проект</span>
+              <span class="site-link-url">в разработке</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="folder is-placeholder" data-folder>
+        <button class="folder-btn" aria-expanded="false" aria-controls="links-5">
+          <div class="folder-glass">
+            <div class="folder-top">
+              <div>
+                <div class="folder-tab" aria-hidden="true"></div>
+                <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              </div>
+              <span class="folder-count">Скоро</span>
+            </div>
+            <div>
+              <div class="folder-title">Проект 5</div>
+              <div class="folder-meta">Скоро здесь будет проект</div>
+            </div>
+          </div>
+        </button>
+        <div class="folder-links" id="links-5" inert>
+          <div class="site-link placeholder">
+            <div class="site-link-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#c3c3cc" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><path d="M12 8v4l2 2"/></svg>
+            </div>
+            <div class="site-link-info">
+              <span class="site-link-name">Скоро здесь будет проект</span>
+              <span class="site-link-url">в разработке</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section wrap" id="about" aria-labelledby="about-title">
+    <div class="eyebrow">Обо мне</div>
+    <h2 id="about-title">Кто я</h2>
+    <div class="about-grid">
+      <div class="about">
+        <p>Привет! Я — TifiWEB, дизайнер и разработчик. Специализируюсь на создании современных интерфейсов: от концепта и прототипа до готового сайта с анимациями.</p>
+        <p>Люблю чистую типографику, спокойные поверхности, аккуратные отступы и микровзаимодействия, которые делают интерфейс живым.</p>
+        <div class="chips" aria-label="Навыки">
+          <span class="chip">UI/UX</span>
+          <span class="chip">HTML/CSS</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">Figma</span>
+          <span class="chip">Анимации</span>
+          <span class="chip">Адаптив</span>
+          <span class="chip">SVG</span>
+        </div>
+      </div>
+      <aside class="about-card" aria-label="Кратко о работе">
+        <h3>Кратко</h3>
+        <div class="stat"><span>Опыт</span><span>3+ года</span></div>
+        <div class="stat"><span>Проектов</span><span>1</span></div>
+        <div class="stat"><span>В разработке</span><span>4</span></div>
+        <div class="stat"><span>Доступен</span><span>Да</span></div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="eyebrow">Контакты</div>
+        <h2>Давай сделаем что-то крутое</h2>
+        <p class="ash">Открыт к новым проектам и сотрудничеству.</p>
+      </div>
+      <div class="footer-contacts">
+        <a href="mailto:cybakovnikita10@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          cybakovnikita10@gmail.com
+        </a>
+        <a href="https://github.com/tifilew" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+          github.com/tifilew
+        </a>
+        <a href="https://t.me/Tifiweb" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.94 0A12 12 0 1 0 24 12 12 12 0 0 0 11.94 0zm5.87 8.16-1.97 9.3c-.15.66-.54.82-1.09.51l-3-2.21-1.45 1.39c-.16.16-.3.3-.6.3l.21-3.05 5.56-5.02c.24-.21-.05-.33-.37-.12l-6.87 4.33-2.96-.93c-.64-.2-.66-.64.13-.95l11.57-4.46c.54-.2 1.01.12.84.91z"/></svg>
+          @Tifiweb
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TifiWEB</span>
+      <span>Сделано с вниманием к деталям</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var toggle = document.getElementById("nav-toggle");
+  var menu = document.getElementById("nav-menu");
+  if (toggle && menu){
+    toggle.addEventListener("click", function(){
+      var open = menu.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  var folders = document.querySelectorAll("[data-folder]");
+  if ("IntersectionObserver" in window && !reduced){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          var i = Array.prototype.indexOf.call(folders, e.target);
+          e.target.style.transitionDelay = (i * 90) + "ms";
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:.15, rootMargin:"0px 0px -40px 0px"});
+    folders.forEach(function(f){ io.observe(f); });
+  } else {
+    folders.forEach(function(f){ f.classList.add("in"); });
+  }
+
+  document.querySelectorAll(".folder-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var folder = btn.closest("[data-folder]");
+      var links = folder.querySelector(".folder-links");
+      var isOpen = folder.classList.toggle("open");
+      btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      if (links){
+        if (isOpen){ links.removeAttribute("inert"); }
+        else { links.setAttribute("inert",""); }
+      }
+      if (isOpen){
+        document.querySelectorAll("[data-folder].open").forEach(function(f){
+          if (f !== folder){
+            f.classList.remove("open");
+            var b = f.querySelector(".folder-btn");
+            var l = f.querySelector(".folder-links");
+            if (b) b.setAttribute("aria-expanded","false");
+            if (l) l.setAttribute("inert","");
+          }
+        });
+      }
+    });
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape"){
+      document.querySelectorAll("[data-folder].open").forEach(function(f){
+        f.classList.remove("open");
+        var b = f.querySelector(".folder-btn");
+        var l = f.querySelector(".folder-links");
+        if (b){ b.setAttribute("aria-expanded","false"); b.focus(); }
+        if (l) l.setAttribute("inert","");
+      });
+    }
+  });
+
+  if (!reduced && window.matchMedia("(pointer:fine)").matches){
+    document.querySelectorAll(".folder:not(.is-placeholder) .folder-btn").forEach(function(btn){
+      var raf = null, tx = 0, ty = 0;
+      btn.addEventListener("pointermove", function(e){
+        var r = btn.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width  - .5;
+        var py = (e.clientY - r.top)  / r.height - .5;
+        tx = py * -8;
+        ty = px *  10;
+        if (!raf){
+          raf = requestAnimationFrame(function(){
+            btn.style.transform = "rotateX(" + tx.toFixed(2) + "deg) rotateY(" + ty.toFixed(2) + "deg)";
+            raf = null;
+          });
+        }
+      });
+      btn.addEventListener("pointerleave", function(){
+        btn.style.transform = "rotateX(0) rotateY(0)";
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
